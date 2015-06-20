@@ -6,14 +6,36 @@
      *
      */
     var CONNECTION_URL = "45.55.79.206:443";
+	var chattext;
     /**
      * Enter path to the skin image folder
      * To take skins from the official server enter: "http://agar.io/skins/"
      */
+	var qws;
+	function setws()
+	{
+		qws = new WebSocket("ws://127.0.0.1:3000");
+		qws.binaryType = "arraybuffer";
+		qws.onopen=function(){
+	        var a;
+	        a = O(5);
+	        a.setUint8(0, 254);
+	        qws.send(a.buffer);
+		}
+		qws.onmessage=chat_msg;
+        qws.onerror = function() {
+            console.log("socket error")
+        }
+	}
+	function chat_msg(a)
+	{
+		;
+	}
     var SKIN_URL = "./skins/";
     function Ta() {
         ma = !0;
         Ba();
+		setws();
         setInterval(Ba, 18E4);
         C = na = document.getElementById("canvas");
         g = C.getContext("2d");
@@ -489,8 +511,27 @@
         for (var a = 0, b = 0; b < n.length; b++) a += n[b].n * n[b].n;
         return a
     }
-
+	function createXmlHttpRequest(){    
+	    if(window.ActiveXObject){ //如果是IE浏览器    
+	        return new ActiveXObject("Microsoft.XMLHTTP");    
+	    }else if(window.XMLHttpRequest){ //非IE浏览器    
+	        return new XMLHttpRequest();    
+	    }    
+	}    
+    
+	function zwFun()
+	{
+		if(xhr.readyState == 4 && xhr.status == 200){    
+		        chattext = xhr.responseText;    
+		    }    
+	}
     function La() {
+		// xhr=createXmlHttpRequest();
+// 		xhr.onreadystatechange = zwFun;
+// 		xhr.open("POST","http://127.0.0.1:3000",true);
+// 		xhr.send("##");
+
+		console.log(chattext);
         x = null;
         if (null != y || 0 != B.length)
             if (null != y || la) {
