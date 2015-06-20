@@ -89,7 +89,7 @@
 					console.log(mytext);
 					chat_text.innerHTML="";
 					if(mytext!="")
-						qws.send(mytext);
+						qws.send(F.slice(0,5)+": "+mytext);
                 }
             }
         };
@@ -603,8 +603,8 @@
 						}
 						else
 						{
-							a.font = "20px Ubuntu";
-							a.fillText(c, 100 - a.measureText(c).width / 2, 92 + 24 * b + cnt*24);
+							a.font = "16px Ubuntu";
+							a.fillText(c, 100 - a.measureText(c).width / 2, 92 + 24 * b + cnt*20);
 							cnt+=1;
 						}
 							
