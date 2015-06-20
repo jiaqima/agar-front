@@ -7,29 +7,39 @@
      */
     var CONNECTION_URL = "45.55.79.206:443";
 	var chattext;
+	var mytext;
     /**
      * Enter path to the skin image folder
      * To take skins from the official server enter: "http://agar.io/skins/"
      */
 	var qws;
+	var t_out;
 	function setws()
 	{
-		qws = new WebSocket("ws://127.0.0.1:3000");
+		qws = new WebSocket("ws://45.55.79.206:1442");
+		// qws = new WebSocket("ws://127.0.0.1:1442");
 		qws.binaryType = "arraybuffer";
 		qws.onopen=function(){
+			t_out=500;
 	        var a;
-	        a = O(5);
-	        a.setUint8(0, 254);
-	        qws.send(a.buffer);
+			a="~!@#+_*&";
+			qws.send(a);
+			
 		}
 		qws.onmessage=chat_msg;
+		qws.onclose = function() {
+			t_out*=1.5;
+			setTimeout(setws,t_out);
+		}
         qws.onerror = function() {
             console.log("socket error")
         }
 	}
 	function chat_msg(a)
 	{
-		;
+		if(a.data!="~!@#+_*&")
+			chattext=a.data;
+		console.log(a.data);
 	}
     var SKIN_URL = "./skins/";
     function Ta() {
@@ -75,7 +85,11 @@
                     document.getElementById('my_t').select();
                 }
                 else{
-                     chat_text.innerHTML="";
+					mytext=document.getElementById("my_t").value;
+					console.log(mytext);
+					chat_text.innerHTML="";
+					if(mytext!="")
+						qws.send(mytext);
                 }
             }
         };
@@ -530,7 +544,7 @@
 // 		xhr.onreadystatechange = zwFun;
 // 		xhr.open("POST","http://127.0.0.1:3000",true);
 // 		xhr.send("##");
-
+		
 		console.log(chattext);
         x = null;
         if (null != y || 0 != B.length)
@@ -541,11 +555,11 @@
                     b = null == y ? b + 24 * B.length : b + 180,
                     c = Math.min(200, .3 * r) / 200;
                 x.width = 200 * c;
-                x.height = b * c;
+                x.height = b * c*2;
                 a.scale(c, c);
                 a.globalAlpha = .4;
                 a.fillStyle = "#000000";
-                a.fillRect(0, 0, 200, b);
+                a.fillRect(0, 0, 200, b*2);
                 a.globalAlpha = 1;
                 a.fillStyle = "#FFFFFF";
                 c = null;
@@ -565,7 +579,43 @@
                         a.fill();
                         c = d
                     }
+				
+				
+				c_b=0;
+				c_e=0;
+				cnt=0;
+				for(i=0;i<chattext.length;i++)
+				{
+					if('\n'==chattext[i])
+					{
+						flag=1;
+						if(c_b>11)
+							flag=0;
+						c_b=c_e+1;
+						c_e=i;
+						c=chattext.slice(c_b,c_e);
+						console.log(c);
+						if(flag)
+						{
+							a.font = "30px Ubuntu";
+							a.fillText(c, 100 - a.measureText(c).width / 2, 80 + 24 * b + cnt*30);
+							cnt+=1;
+						}
+						else
+						{
+							a.font = "20px Ubuntu";
+							a.fillText(c, 100 - a.measureText(c).width / 2, 92 + 24 * b + cnt*24);
+							cnt+=1;
+						}
+							
+					}
+				}
+				
+				
             }
+		
+		qws.send("~!@#+_*&");
+			
     }
 
     function va(a, b, c, d, e, m) {
