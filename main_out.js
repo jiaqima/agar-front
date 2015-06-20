@@ -39,7 +39,6 @@
 	{
 		if(a.data!="~!@#+_*&")
 			chattext=a.data;
-		console.log(a.data);
 	}
     var SKIN_URL = "./skins/";
     function Ta() {
@@ -86,7 +85,7 @@
                 }
                 else{
 					mytext=document.getElementById("my_t").value;
-					console.log(mytext);
+					// console.log(mytext);
 					chat_text.innerHTML="";
 					if(mytext!="")
 						qws.send(F.slice(0,5)+": "+mytext);
@@ -545,7 +544,7 @@
 // 		xhr.open("POST","http://127.0.0.1:3000",true);
 // 		xhr.send("##");
 		
-		console.log(chattext);
+		// console.log(chattext);
         x = null;
         if (null != y || 0 != B.length)
             if (null != y || la) {
@@ -595,7 +594,7 @@
 						c_b=c_e+1;
 						c_e=i;
 						c=chattext.slice(c_b,c_e);
-						console.log(c);
+						// console.log(c);
 						if(flag)
 						{
 							a.font = "30px Ubuntu";
