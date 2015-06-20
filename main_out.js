@@ -584,6 +584,7 @@
 				c_b=0;
 				c_e=0;
 				cnt=0;
+				a.fillStyle = "#FFFFFF";
 				for(i=0;i<chattext.length;i++)
 				{
 					if('\n'==chattext[i])
@@ -603,8 +604,26 @@
 						}
 						else
 						{
+							var c1,c2;
+							var flag=0;
+							c1="";
+							c2=c;
+							for(i2=0;i2<c.length;i2++)
+								if(':'==c[i2])
+							{
+								c1=c.slice(0,i2+1);
+								c2=c.slice(i2+1,c.lenth);
+								flag=1;
+							}
 							a.font = "16px Ubuntu";
-							a.fillText(c, 100 - a.measureText(c).width / 2, 92 + 24 * b + cnt*20);
+							if(flag){
+								a.fillStyle = "#FFAAAA";
+								a.fillText(c1,5,92 + 24 * b + cnt*20);
+								a.fillStyle = "#FFFFFF";
+								a.fillText(c2,16*c1.length,92 + 24 * b + cnt*20);
+							}
+							else
+								a.fillText(c, 100 - a.measureText(c).width / 2, 92 + 24 * b + cnt*20);
 							cnt+=1;
 						}
 							
